@@ -1,0 +1,13 @@
+.TopCounter{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 50px;
+    text-align: center;
+    color: #fff;
+}
+.TopCounterLimit{
+    color: #9A3978;
+}

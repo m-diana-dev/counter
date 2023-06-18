@@ -1,0 +1,25 @@
+.Counter{
+    background-color: #5C4D91;
+    height: 300px;
+    width: 400px;
+    border: 2px solid #1C172C;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+}
+.CounterTop{
+    height: 150px;
+    border: 2px solid #1C172C;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #493D74;
+}
+.CounterBottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
