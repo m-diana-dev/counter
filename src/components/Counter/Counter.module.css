@@ -11,15 +11,47 @@
     gap: 20px;
 }
 .CounterTop{
+    /*display: flex;*/
+    /*flex-direction: column;*/
+    /*gap: 10px;*/
     height: 150px;
     border: 2px solid #1C172C;
     border-radius: 10px;
     padding: 10px;
     background-color: #493D74;
 }
+.CounterTopItem{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 500;
+    height: 50%;
+}
+.CounterTopItem input{
+    height: 30px;
+    width: 50%;
+    border-radius: 8px;
+    border: 2px solid #1C172C;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+    padding: 5px;
+    outline: none;
+}
+.CounterTopItem .InputError{
+    border-color:#9A3978;
+}
 .CounterBottom{
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 20px;
+}
+.Flex{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
     gap: 20px;
 }
