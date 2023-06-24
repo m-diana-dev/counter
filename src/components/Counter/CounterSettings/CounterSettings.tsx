@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent,KeyboardEvent} from 'react';
 import s from "../Counter.module.css";
 import {Button} from "../../Button/Button";
 import {countType} from "../Counter";
@@ -22,6 +22,7 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
             ? {...count, maxValue: carrentValue, setting: true, error: {...count.error, max: 'incorrect value'}}
             : {...count, maxValue: carrentValue, setting: true, error: {...count.error, max: ''}})
     }
+
     const onChangeStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const carrentValue = +e.currentTarget.value;
         setCount((carrentValue < 0 || carrentValue === count.maxValue)

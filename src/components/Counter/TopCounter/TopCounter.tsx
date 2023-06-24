@@ -17,11 +17,7 @@ export const TopCounter: React.FC<TopCounterPropsType> = (props) => {
         <div className={StyleTopCounter}>
             { countSetting && (count.error.max || count.error.start)
                 ? <div className={s.ErrorText}>{count.error.max || count.error.start}</div>
-                : !countSetting ? count.value : 'inter values and press "set"'}
-            {/*{!countSetting && count.value}*/}
-            {/*{countSetting && count.error && count.error}*/}
-            {/*{countSetting && 'inter values and press "set"'}*/}
-
+                : !countSetting ? count.value === maxValue ? <div>Max: {count.value}</div> : count.value : 'inter values and press "set"'}
         </div>
     );
 };

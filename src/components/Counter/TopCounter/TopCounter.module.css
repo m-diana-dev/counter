@@ -14,3 +14,10 @@
 .ErrorText{
     color: #9A3978;
 }
+
+
+@media (max-width: 991px) {
+    .TopCounter{
+        font-size: 30px;
+    }
+}
