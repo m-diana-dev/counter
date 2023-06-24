@@ -9,10 +9,9 @@ type CounterViewPropsType = {
     minValue: number
     count: countType
     setCount: (count: countType)=>void
-    countSetting: boolean
 }
 export const CounterView: React.FC<CounterViewPropsType> = (props) => {
-    const{maxValue, minValue, count, countSetting,setCount} = props;
+    const{maxValue, minValue, count,setCount} = props;
     const onClickPlusHandler = () => {
         if(count.value < count.maxValue){
             setCount({ ...count, value: count.value + 1});
@@ -24,11 +23,11 @@ export const CounterView: React.FC<CounterViewPropsType> = (props) => {
     return (
         <div className={s.Counter}>
             <div className={s.CounterTop}>
-                <TopCounter count={count} maxValue={maxValue} countSetting={countSetting}/>
+                <TopCounter count={count} maxValue={maxValue} countSetting={count.setting}/>
             </div>
             <div className={s.CounterBottom}>
-                <Button disabled={count.value===count.maxValue || countSetting} name={'+'} callback={onClickPlusHandler}/>
-                <Button disabled={count.value===count.minValue || countSetting} name={'reset'} callback={onClickResetHandler}/>
+                <Button disabled={count.value===count.maxValue || count.setting} name={'+'} callback={onClickPlusHandler}/>
+                <Button disabled={count.value===count.minValue || count.setting} name={'reset'} callback={onClickResetHandler}/>
             </div>
         </div>
     );

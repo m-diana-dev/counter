@@ -30,35 +30,17 @@ function Counter() {
             start: ''
         }
     });
-    // const [countSetting, setCountSetting] = useState(false);
 
-    const setMaxValue = (value: number) => {
-        setCount({...count, maxValue: value})
-    }
-
-    const setStartValue = (value: number) => {
-        setCount({...count, minValue: value})
-        if (value < 0) setCount({...count, error: {...count.error, start: 'negative value is invalid'}})
-    }
-    const setSetting = (value: boolean) => {
-        // setCountSetting(value)
-        setCount({...count, setting: value})
-    }
     return (
         <div className={s.Flex}>
             <CounterSettings maxValue={count.maxValue}
                              minValue={count.minValue}
                              count={count}
-                             setCount={setCount}
-                             setMaxValue={setMaxValue}
-                             setStartValue={setStartValue}
-                             setSetting={setSetting}
-                             countSetting={count.setting}/>
+                             setCount={setCount}/>
             <CounterView maxValue={count.maxValue}
                          minValue={count.minValue}
                          count={count}
-                         setCount={setCount}
-                         countSetting={count.setting}/>
+                         setCount={setCount}/>
         </div>
     );
 }
