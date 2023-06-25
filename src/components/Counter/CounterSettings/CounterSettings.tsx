@@ -1,4 +1,4 @@
-import React, {ChangeEvent,KeyboardEvent} from 'react';
+import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from "../Counter.module.css";
 import {Button} from "../../Button/Button";
 import {countType} from "../Counter";
@@ -16,21 +16,22 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
         count,
         setCount,
     } = props;
-    const onChangeMaxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const carrentValue = +e.currentTarget.value;
-        setCount((carrentValue < 0 || carrentValue === count.minValue || carrentValue < count.minValue)
-            ? {...count, maxValue: carrentValue, setting: true, error: {...count.error, max: 'incorrect value'}}
-            : {...count, maxValue: carrentValue, setting: true, error: {...count.error, max: ''}})
+
+    const onChangeHandler = (start = count.minValue, max = count.maxValue) => {
+        const params = {...count, minValue: start, maxValue: max, setting: true}
+        if(max < 0){
+            setCount( {...params, error: {...count.error, max: 'incorrect value'}})
+        }
+        else if(start < 0 || start > max) {
+            setCount({...params, error: {...count.error, start: 'incorrect value'}})
+        }
+        else if(max === start) {
+            setCount({...params, error: {...count.error, max: 'incorrect value', start: 'incorrect value'}})
+        }
+        else{
+            setCount({...params, error: {...count.error, max: '', start:''}})
+        }
     }
-
-    const onChangeStartHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const carrentValue = +e.currentTarget.value;
-        setCount((carrentValue < 0 || carrentValue === count.maxValue)
-            ? {...count, minValue: carrentValue, setting: true, error: {...count.error, start: 'incorrect value'}}
-            : {...count, minValue: carrentValue, setting: true, error: {...count.error, start: ''}})
-    }
-
-
     const onSetHandler = () => {
         setCount({...count, setting: false, value: count.minValue})
     }
@@ -43,11 +44,15 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
             <div className={s.CounterTop}>
                 <div className={s.CounterTopItem}>
                     <span>max value:</span>
-                    <input className={InputErrorMax} type="number" value={maxValue} onChange={onChangeMaxHandler}/>
+                    <input className={InputErrorMax} type="number"
+                           value={maxValue}
+                           onChange={(e)=>onChangeHandler(undefined,+e.currentTarget.value)}/>
                 </div>
                 <div className={s.CounterTopItem}>
                     <span>start value:</span>
-                    <input className={InputErrorStart} type="number" value={minValue} onChange={onChangeStartHandler}/>
+                    <input className={InputErrorStart} type="number"
+                           value={minValue}
+                           onChange={(e)=>onChangeHandler(+e.currentTarget.value, undefined)}/>
                 </div>
             </div>
             <div className={s.CounterBottom}>
