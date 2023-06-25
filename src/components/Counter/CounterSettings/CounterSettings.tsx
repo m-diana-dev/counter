@@ -39,8 +39,10 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
     const InputErrorMax = count.error.max ? s.InputError : '';
     const InputErrorStart = count.error.start ? s.InputError : '';
     const disabledBtn = !count.setting || !!count.error.max || !!count.error.start
+    /*for version 2.2*/
+    const SettingsBlock = count.setting ? undefined : s.opacitySettings;
     return (
-        <div className={s.Counter}>
+        <div className={s.Counter + ' ' + SettingsBlock}>
             <div className={s.CounterTop}>
                 <div className={s.CounterTopItem}>
                     <span>max value:</span>

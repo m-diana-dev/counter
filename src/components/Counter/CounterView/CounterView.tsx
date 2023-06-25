@@ -28,6 +28,8 @@ export const CounterView: React.FC<CounterViewPropsType> = (props) => {
             <div className={s.CounterBottom}>
                 <Button disabled={count.value===count.maxValue || count.setting} name={'+'} callback={onClickPlusHandler}/>
                 <Button disabled={count.value===count.minValue || count.setting} name={'reset'} callback={onClickResetHandler}/>
+                {/*for version 2.2*/}
+                <Button disabled={count.setting} name={'set'} callback={()=>{setCount({...count, setting: true})}}/>
             </div>
         </div>
     );
