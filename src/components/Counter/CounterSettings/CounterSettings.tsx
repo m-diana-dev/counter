@@ -41,6 +41,7 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
     const disabledBtn = !count.setting || !!count.error.max || !!count.error.start
     /*for version 2.2*/
     const SettingsBlock = count.setting ? undefined : s.opacitySettings;
+
     return (
         <div className={s.Counter + ' ' + SettingsBlock}>
             <div className={s.CounterTop}>

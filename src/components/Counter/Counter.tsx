@@ -17,10 +17,11 @@ export type countType = {
 
 function Counter() {
 
+    //лучше разделить на несколько useSate либо испольщовать useReducer
     const [count, setCount] = useState<countType>({
-        value: 0,
-        maxValue: 5,
-        minValue: 0,
+        value: Number(localStorage.getItem('CounterStartValue')) || 0,
+        maxValue: Number(localStorage.getItem('CounterMaxValue')) || 5,
+        minValue: Number(localStorage.getItem('CounterStartValue')) || 0,
         setting: false,
         error: {
             max: '',
@@ -56,7 +57,7 @@ function Counter() {
                     setting: true
                 })
             }
-            if( +localStorageMaxItem === +localStorageStartItem){
+            if (+localStorageMaxItem === +localStorageStartItem) {
                 setCount({
                     ...params,
                     error: {...count.error, max: 'incorrect value', start: 'incorrect value'},
