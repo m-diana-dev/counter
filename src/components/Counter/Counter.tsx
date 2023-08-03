@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useReducer} from 'react';
 import {CounterView} from "./CounterView/CounterView";
 import {CounterSettings} from "./CounterSettings/CounterSettings";
 import s from "../Counter/Counter.module.css";
+import {changingCounterValuesAC, counterReducer} from "../../state/counter-reducer";
 
 
 export type countType = {
@@ -15,13 +16,15 @@ export type countType = {
     }
 }
 
+export const INITIAL_MIN_VALUE = 0;
+export const INITIAL_MAX_VALUE = 5;
+
 function Counter() {
 
-    //лучше разделить на несколько useSate либо испольщовать useReducer
-    const [count, setCount] = useState<countType>({
-        value: Number(localStorage.getItem('CounterStartValue')) || 0,
-        maxValue: Number(localStorage.getItem('CounterMaxValue')) || 5,
-        minValue: Number(localStorage.getItem('CounterStartValue')) || 0,
+    const [count, dispatch] = useReducer(counterReducer, {
+        value: Number(localStorage.getItem('CounterStartValue')) || INITIAL_MIN_VALUE,
+        maxValue: Number(localStorage.getItem('CounterMaxValue')) || INITIAL_MAX_VALUE,
+        minValue: Number(localStorage.getItem('CounterStartValue')) || INITIAL_MIN_VALUE,
         setting: false,
         error: {
             max: '',
@@ -34,36 +37,7 @@ function Counter() {
         const localStorageStartItem = localStorage.getItem('CounterStartValue');
 
         if (localStorageStartItem && localStorageMaxItem) {
-            const params = {
-                ...count,
-                minValue: JSON.parse(localStorageStartItem),
-                maxValue: JSON.parse(localStorageMaxItem),
-                value: JSON.parse(localStorageStartItem),
-            }
-            setCount({...params})
-            if (+localStorageStartItem < 0
-                || +localStorageStartItem > +localStorageMaxItem) {
-                setCount({
-                    ...params,
-                    error: {...count.error, start: 'incorrect value'},
-                    setting: true
-                })
-            }
-            if (+localStorageMaxItem < 0
-                || +localStorageMaxItem < +localStorageStartItem) {
-                setCount({
-                    ...params,
-                    error: {...count.error, max: 'incorrect value'},
-                    setting: true
-                })
-            }
-            if (+localStorageMaxItem === +localStorageStartItem) {
-                setCount({
-                    ...params,
-                    error: {...count.error, max: 'incorrect value', start: 'incorrect value'},
-                    setting: true
-                })
-            }
+            dispatch(changingCounterValuesAC(+localStorageStartItem, +localStorageMaxItem))
         }
     }, [])
 
@@ -79,12 +53,11 @@ function Counter() {
         <div className={s.Flex}>
             <CounterSettings maxValue={count.maxValue}
                              minValue={count.minValue}
-                             count={count}
-                             setCount={setCount}/>
+                             dispatch={dispatch}
+                             count={count}/>
             <CounterView maxValue={count.maxValue}
-                         minValue={count.minValue}
                          count={count}
-                         setCount={setCount}/>
+                         dispatch={dispatch}/>
         </div>
     );
 }

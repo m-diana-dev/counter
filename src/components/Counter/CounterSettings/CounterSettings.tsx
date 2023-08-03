@@ -2,38 +2,27 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from "../Counter.module.css";
 import {Button} from "../../Button/Button";
 import {countType} from "../Counter";
+import {ActionType, changingCounterValuesAC, settingCounterAC} from "../../../state/counter-reducer";
 
 type CounterSettingsPropsType = {
     maxValue: number
     minValue: number
     count: countType
-    setCount: (count: countType) => void
+    dispatch: React.Dispatch<ActionType>
 }
 export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
     const {
         maxValue,
         minValue,
         count,
-        setCount,
+        dispatch,
     } = props;
 
-    const onChangeHandler = (start = count.minValue, max = count.maxValue) => {
-        const params = {...count, minValue: start, maxValue: max, setting: true}
-        if(max < 0){
-            setCount( {...params, error: {...count.error, max: 'incorrect value'}})
-        }
-        else if(start < 0 || start > max) {
-            setCount({...params, error: {...count.error, start: 'incorrect value'}})
-        }
-        else if(max === start) {
-            setCount({...params, error: {...count.error, max: 'incorrect value', start: 'incorrect value'}})
-        }
-        else{
-            setCount({...params, error: {...count.error, max: '', start:''}})
-        }
+    const onChangeHandler = (start: number, max: number) => {
+        dispatch(changingCounterValuesAC(start, max))
     }
     const onSetHandler = () => {
-        setCount({...count, setting: false, value: count.minValue})
+        dispatch(settingCounterAC())
     }
 
     const InputErrorMax = count.error.max ? s.InputError : '';
@@ -49,17 +38,17 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
                     <span>max value:</span>
                     <input className={InputErrorMax} type="number"
                            value={maxValue}
-                           onChange={(e)=>onChangeHandler(undefined,+e.currentTarget.value)}/>
+                           onChange={(e)=>onChangeHandler(count.minValue,+e.currentTarget.value)}/>
                 </div>
                 <div className={s.CounterTopItem}>
                     <span>start value:</span>
                     <input className={InputErrorStart} type="number"
                            value={minValue}
-                           onChange={(e)=>onChangeHandler(+e.currentTarget.value, undefined)}/>
+                           onChange={(e)=>onChangeHandler(+e.currentTarget.value,  count.maxValue)}/>
                 </div>
             </div>
             <div className={s.CounterBottom}>
-                <Button name={'set'} callback={() => onSetHandler()} disabled={disabledBtn}/>
+                <Button name={'set'} onClick={() => onSetHandler()} disabled={disabledBtn}/>
             </div>
         </div>
     );
