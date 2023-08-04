@@ -8,7 +8,7 @@ import {ActionType, incrementCounterAC, resetCounterAC, settingsModeCounterAC} f
 type CounterViewPropsType = {
     maxValue: number
     count: countType
-    dispatch: React.Dispatch<ActionType>
+    dispatch: Dispatch<ActionType>
 }
 export const CounterView: React.FC<CounterViewPropsType> = (props) => {
     const{maxValue, count,dispatch} = props;

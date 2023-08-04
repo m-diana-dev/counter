@@ -1,14 +1,15 @@
-import React, {ChangeEvent, KeyboardEvent} from 'react';
+import React, {Dispatch} from 'react';
 import s from "../Counter.module.css";
 import {Button} from "../../Button/Button";
 import {countType} from "../Counter";
 import {ActionType, changingCounterValuesAC, settingCounterAC} from "../../../state/counter-reducer";
+import {Input} from "../../Input/Input";
 
 type CounterSettingsPropsType = {
     maxValue: number
     minValue: number
     count: countType
-    dispatch: React.Dispatch<ActionType>
+    dispatch: Dispatch<ActionType>
 }
 export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
     const {
@@ -36,15 +37,15 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = (props) => {
             <div className={s.CounterTop}>
                 <div className={s.CounterTopItem}>
                     <span>max value:</span>
-                    <input className={InputErrorMax} type="number"
+                    <Input className={InputErrorMax} type="number"
                            value={maxValue}
-                           onChange={(e)=>onChangeHandler(count.minValue,+e.currentTarget.value)}/>
+                           onChange={(e) => onChangeHandler(count.minValue, +e.currentTarget.value)}/>
                 </div>
                 <div className={s.CounterTopItem}>
                     <span>start value:</span>
-                    <input className={InputErrorStart} type="number"
-                           value={minValue}
-                           onChange={(e)=>onChangeHandler(+e.currentTarget.value,  count.maxValue)}/>
+                    <Input className={InputErrorStart} type="number"
+                                    value={minValue}
+                                    onChange={(e) => onChangeHandler(+e.currentTarget.value, count.maxValue)}/>
                 </div>
             </div>
             <div className={s.CounterBottom}>

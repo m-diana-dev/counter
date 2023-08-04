@@ -12,7 +12,23 @@ export type ActionType = incrementCounterActionType
     | settingCounterActionType
     | changingCounterValuesActionType
 
-export const counterReducer = (state: countType, action: ActionType) => {
+
+
+export const INITIAL_MIN_VALUE = 0;
+export const INITIAL_MAX_VALUE = 5;
+
+const INITIAL_STATE: countType = {
+    value: INITIAL_MIN_VALUE,
+    maxValue: INITIAL_MAX_VALUE,
+    minValue: INITIAL_MIN_VALUE,
+    setting: false,
+    error: {
+        max: '',
+        start: ''
+    }
+}
+
+export const counterReducer = (state: countType = INITIAL_STATE, action: ActionType): countType => {
     switch (action.type) {
         case "INCREMENT-COUNTER":
             return {...state, value: state.value + 1}

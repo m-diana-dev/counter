@@ -13,11 +13,13 @@ export const TopCounter: React.FC<TopCounterPropsType> = (props) => {
 
     const StyleTopCounter = `${s.TopCounter} ${(count.value === count.maxValue) ? s.TopCounterLimit : ''}`
 
+    const informationDisplay = countSetting && (count.error.max || count.error.start)
+        ? <div className={s.ErrorText}>{count.error.max || count.error.start}</div>
+        : !countSetting ? count.value === maxValue ? <div>Max: {count.value}</div> : count.value : 'inter values and press "set"'
+
     return (
         <div className={StyleTopCounter}>
-            { countSetting && (count.error.max || count.error.start)
-                ? <div className={s.ErrorText}>{count.error.max || count.error.start}</div>
-                : !countSetting ? count.value === maxValue ? <div>Max: {count.value}</div> : count.value : 'inter values and press "set"'}
+            {informationDisplay}
         </div>
     );
 };

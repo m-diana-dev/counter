@@ -1,8 +1,9 @@
-import React, {useEffect, useReducer} from 'react';
+import React from 'react';
 import {CounterView} from "./CounterView/CounterView";
 import {CounterSettings} from "./CounterSettings/CounterSettings";
 import s from "../Counter/Counter.module.css";
-import {changingCounterValuesAC, counterReducer} from "../../state/counter-reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../state/store";
 
 
 export type countType = {
@@ -16,38 +17,10 @@ export type countType = {
     }
 }
 
-export const INITIAL_MIN_VALUE = 0;
-export const INITIAL_MAX_VALUE = 5;
-
 function Counter() {
 
-    const [count, dispatch] = useReducer(counterReducer, {
-        value: Number(localStorage.getItem('CounterStartValue')) || INITIAL_MIN_VALUE,
-        maxValue: Number(localStorage.getItem('CounterMaxValue')) || INITIAL_MAX_VALUE,
-        minValue: Number(localStorage.getItem('CounterStartValue')) || INITIAL_MIN_VALUE,
-        setting: false,
-        error: {
-            max: '',
-            start: ''
-        }
-    });
-
-    useEffect(() => {
-        const localStorageMaxItem = localStorage.getItem('CounterMaxValue');
-        const localStorageStartItem = localStorage.getItem('CounterStartValue');
-
-        if (localStorageStartItem && localStorageMaxItem) {
-            dispatch(changingCounterValuesAC(+localStorageStartItem, +localStorageMaxItem))
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('CounterMaxValue', JSON.stringify(count.maxValue))
-    }, [count.maxValue])
-
-    useEffect(() => {
-        localStorage.setItem('CounterStartValue', JSON.stringify(count.minValue))
-    }, [count.minValue])
+    const dispatch = useDispatch()
+    const count = useSelector<RootStateType, countType>(state => state.counter)
 
     return (
         <div className={s.Flex}>
